@@ -149,16 +149,52 @@ var _ = { };
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
   _.reduce = function(collection, iterator, initialValue) {
-
-  };
-
+    if (initialValue === undefined) {
+      initialValue = 0;
+    }
+    for (var i = 0; i < collection.length; i++) {
+      initialValue = iterator(initialValue, collection[i]);    }
+	return initialValue;
+};
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
+      for (var key in collection) {
+        if (target === collection[key]) {
+          return true;
+        }
+      }
+        return false;
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
+      if (typeof iterator === "undefined") {
+        return true;
+      }
+
+    // Why does this not work?
+    // if (typeof iterator === "undefined") {
+    //   honesty(collection);
+    // }
+    //
+    // function honesty(arr) {
+    //   for (var key in arr) {
+    //     if (arr[key]){
+    //     } else {
+    //       return false;
+    //     }
+    //   }
+    //   return true;
+    // }
+
+    for (var key in collection) {
+      if(iterator(collection[key]) == true) { //Why does this not work with ""==="" ?
+      } else {
+        return false;
+      }
+    }
+    return true;
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
