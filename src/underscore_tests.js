@@ -132,13 +132,24 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
-    
-  };
+    if (typeof methodName === "string") {
+       for (var i = 0; i < list.length; i++) {
+          list[i][methodName]();
+       }
+         return list;
+      }
+     for (var j = 0; j < list.length; j++) {
+      methodName.call(list[j]);
+     }
+       return list;
+   };
+
 
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
   _.reduce = function(collection, iterator, initialValue) {
+
   };
 
   // Determine if the array or object contains a given value (using `===`).
