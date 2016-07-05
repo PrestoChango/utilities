@@ -16,13 +16,8 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
-      if(n === undefined) {
-        return array[0];
-      }
-      else {
-      	array = array.slice(0, n);
-        return array;
-      }
+      if(!(n)) return array[0];
+      return array.slice(0, n);
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
@@ -57,14 +52,7 @@ var _ = { };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
-  _.indexOf = function(array, target){
-    for (var i = 0; i < array.length; i++) {
-      if(array[i] === target) {
-        return i;
-      }
-    }
-      return -1;
-  };
+  _.indexOf = function(array, target){ for(var i = 0; i < array.length; i++) if(array[i] === target) return i; return -1;};
 
   // Return all elements of an array that pass a truth test ('iterator' function argument)
   _.filter = function(collection, iterator) {
@@ -200,6 +188,21 @@ var _ = { };
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
+    if (typeof iterator === "undefined"){
+      for (var key in collection) {
+        if (collection[key]) {
+          return true;
+        }
+      }
+        return false;
+    }
+
+    for (var key in collection) {
+      if (iterator(collection[key])) {
+        return true;
+      }
+    }
+      return false;
   };
 
 
@@ -213,12 +216,29 @@ var _ = { };
   // Extend a given object with all the properties of the passed in
   // object(s).
   _.extend = function(obj) {
+    for (var i = 1; i <= arguments.length; i++){
+      for (var prop in arguments[i]) {
+        obj[prop] = arguments[i][prop];
+      }
+    }
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
-  _.defaults = function(obj) {
-  };
+_.defaults = function(obj) {
+  for (var i = 1; i <= arguments.length; i++){
+    for (var prop in arguments[i]) {
+      if(obj.hasOwnProperty(prop)){
+      }
+      else {
+        obj[prop] = arguments[i][prop];
+    }
+    }
+  }
+  return obj;
+};
+
 
 
   /**
